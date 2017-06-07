@@ -23,9 +23,13 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
 
         private ASPxButton submit;
 
+        private ASPxButton cancel;
+
+        private ASPxButton pause;
+
         private ASPxTrackBar trackBar;
 
-        private ASPxComboBox statusDropdown;
+        private ASPxLabel statusLabel;
 
         private IObjectSpace os;
 
@@ -49,19 +53,11 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
             }
         }
 
-        private bool CanUpdateStatusDropdown
+        protected bool IsCurrentCanUpdate
         {
             get
             {
-                return statusDropdown.Enabled;
-            }
-        }
-
-        private bool IsStatusDropdownChanged
-        {
-            get
-            {
-                return Convert.ToInt32(statusDropdown.SelectedItem.Value) != CurrentTask.Status;
+                return CurrentTask.TaskAssignedTo.Oid == Guid.Parse(SecuritySystem.CurrentUserId.ToString());
             }
         }
 
@@ -75,6 +71,8 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
 
             #region Submit Button
             submit = this.CreateSubmitButton();
+            cancel = this.CreateCancelButton();
+            pause = this.CreatePauseButton();
             #endregion
             #region htmlEditor
             htmlEditor = CreateChatEditor();
@@ -85,25 +83,60 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
             container.Controls.Add(htmlEditor);
             container.Controls.Add(this.CreateBottomPanel());
             container.Controls.Add(submit);
-            
+            container.Controls.Add(pause);
+            container.Controls.Add(cancel);
             return container;
         }
 
-        protected bool IsCurrentCanUpdate
+        private ASPxButton CreatePauseButton()
         {
-            get
+            ASPxButton control = new ASPxButton();
+            control.Text = "Tạm dừng";
+            control.AutoPostBack = false;
+            control.Style.Add("background-color", "#FFEA00");
+            control.Style.Add("color", "#fff");
+            control.ClientSideEvents.Click = @"function(e) { 
+                if(window.confirm('Bạn có muốn tạm dừng công việc này không?')) {
+                    eval('_ChatBox_Callback_Panel_').PerformCallback('PAUSE');eval('__ChatBox_Grid_').Refresh(); 
+                }
+            }";
+            if (!IsCurrentCanUpdate)
             {
-                return CurrentTask.TaskAssignedTo.Oid == Guid.Parse(SecuritySystem.CurrentUserId.ToString());
+                control.Enabled = false;
+                control.ClientEnabled = false;
             }
+            return control;
         }
+
+        private ASPxButton CreateCancelButton()
+        {
+            ASPxButton control = new ASPxButton();
+            control.Text = "Hủy";
+            control.AutoPostBack = false;
+            control.Style.Add("background-color", "#f44336");
+            control.Style.Add("color", "#fff");
+            control.ClientSideEvents.Click = @"function(e) { 
+                if(window.confirm('Bạn có muốn HỦY công việc này không?')) {
+                    eval('_ChatBox_Callback_Panel_').PerformCallback('CANCEL');eval('__ChatBox_Grid_').Refresh(); 
+                }
+            }";
+            if (!IsCurrentCanUpdate)
+            {
+                control.Enabled = false;
+                control.ClientEnabled = false;
+            }
+            return control;
+        }
+
 
         protected ASPxButton CreateSubmitButton()
         {
             ASPxButton control = new ASPxButton();
-            control.Text = "Gửi";
-            //submit.Click += Submit_Click;
+            control.Text = "Cập nhật";
             control.AutoPostBack = false;
-            control.ClientSideEvents.Click = @"function(e) { eval('_ChatBox_Callback_Panel_').PerformCallback();eval('__ChatBox_Grid_').Refresh(); }";
+            control.Style.Add("background-color", "#00C853");
+            control.Style.Add("color", "#fff");
+            control.ClientSideEvents.Click = @"function(e) { eval('_ChatBox_Callback_Panel_').PerformCallback('UPDATE');eval('__ChatBox_Grid_').Refresh(); }";
             return control;
         }
 
@@ -118,37 +151,60 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
         protected WebControl CreateBottomPanel()
         {
             trackBar = CreateTrackBar();
-            statusDropdown = CreateStatusDropDown();
+            statusLabel = CreateStatuLabel();
+            this.UpdateLabelText();
+            this.UpdateLabelStyle();
             ASPxPanel trackBarPanel = new ASPxPanel();
             trackBarPanel.Width = Unit.Percentage(100);
             trackBarPanel.Controls.Add(this.CreateTrackbarLabel());
             trackBarPanel.Controls.Add(trackBar);
-            trackBarPanel.Controls.Add(statusDropdown);
             if (!IsCurrentCanUpdate)
             {
                 trackBar.Enabled = false;
-                statusDropdown.Enabled = false;
             }
             return trackBarPanel;
         }
 
-        protected ASPxComboBox CreateStatusDropDown()
+        protected ASPxLabel CreateStatuLabel()
         {
-            ASPxComboBox control = new ASPxComboBox();
-            control.Items.Add(new ListEditItem("--Chọn tình trạng--", -1));
-            control.Items.Add(new ListEditItem("Chưa bắt đầu", 0));
-            control.Items.Add(new ListEditItem("Đang thực hiện", 1));
-            control.Items.Add(new ListEditItem("Tạm hoãn", 2));
-            control.Items.Add(new ListEditItem("Hoàn thành", 3));
-            control.Items.Add(new ListEditItem("Hủy bỏ", 4));
-            control.EnableCallbackMode = false;
+            ASPxLabel control = new ASPxLabel();
             control.Width = Unit.Pixel(178);
             control.Style.Add("display", "inline-block");
             control.Style.Add("position", "relative");
             control.Style.Add("top", "2.5em");
             control.Style.Add("margin-left", "1.5em");
-            control.SelectedIndex = control.Items.IndexOfValue(CurrentTask.Status.ToString());
             return control;
+        }
+
+        private void UpdateLabelText()
+        {
+            if(statusLabel != null)
+            {
+                statusLabel.Text = "Tình trạng: " + ASPxTaskExtraStatusEditor.getCaption(CurrentTask.Status);
+            }
+        }
+
+        private void UpdateLabelStyle()
+        {
+            if (statusLabel != null)
+            {
+                statusLabel.Style.Add("font-style", "italic");
+                switch(CurrentTask.Status)
+                {
+                    case 0:
+                        statusLabel.Style.Add("color", "#999");break;
+                    case 1:
+                        statusLabel.Style.Add("color", "#000"); break;
+                    case 2:
+                        statusLabel.Style.Add("color", "#FFEB3B"); break;
+                    case 3:
+                        statusLabel.Style.Add("color", "green"); break;
+                    case 4:
+                        statusLabel.Style.Add("color", "red"); break;
+                    default:
+                        break;
+                }
+            }
         }
 
         protected ASPxLabel CreateTrackbarLabel()
@@ -195,18 +251,16 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
                     chat.EmployeeCreated = GetCurrentUserInObjectSpace();
                     chat.DateCreated = DateTime.Now;
                     chat.Text = htmlEditor.Html;
-                    bool hasHorizonalLine = true;
-                    if (IsTrackBarChanged && CanUpdateTrackbar) { 
-                    
-                        chat.Text += "<hr/>" + string.Format("<em>Cập nhật tiếp độ: {0}%</em>", trackBar.Value);
-                        task.PercentCompleted = Convert.ToInt32(trackBar.Value);
-                        hasHorizonalLine = false;
+                    if (e.Parameter == "UPDATE") {
+                        this.UpdateTask(task, chat);
                     }
-                    if(IsStatusDropdownChanged && CanUpdateStatusDropdown)
+                    else if(e.Parameter == "PAUSE")
                     {
-                         chat.Text += hasHorizonalLine ? "<hr/>" : "<br/>";
-                         chat.Text += string.Format("<em>Cập nhật Tình trạng: {0}</em>", statusDropdown.SelectedItem.Text);
-                        task.Status = Convert.ToInt32(statusDropdown.SelectedItem.Value);
+                        this.PauseTask(task, chat);
+                    }
+                    else if(e.Parameter == "CANCEL")
+                    {
+                        this.CancelTask(task, chat);
                     }
                     chat.TaskNote = task;
                     os.CommitChanges();
@@ -221,6 +275,53 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
 
                 }
             }
+        }
+
+        private void CancelTask(TaskExtra task, NoteExtra chat)
+        {
+            if (CanUpdateTrackbar)
+            {
+                chat.Text += "<hr/>";
+                chat.Text += string.Format("<em>Cập nhật Tình trạng: <span style=\"color:red;\">{0}</span></em>", "Hủy bỏ");
+                task.Status = 4;
+                task.PercentCompleted = 0;
+                trackBar.Value = 0;
+            }
+        }
+
+        private void PauseTask(TaskExtra task, NoteExtra chat)
+        {
+            if (CanUpdateTrackbar)
+            {
+                chat.Text += "<hr/>";
+                chat.Text += string.Format("<em>Cập nhật Tình trạng: <span style=\"color:#FFEB3B;\">{0}</span></em>", "Tạm hoãn");
+                task.Status = 2;
+            }
+        }
+
+        private void UpdateTask(TaskExtra task, NoteExtra chat)
+        {
+            bool hasHorizonalLine = true;
+            int trackValue = Convert.ToInt32(trackBar.Value);
+            if (IsTrackBarChanged && CanUpdateTrackbar)
+            {
+
+                chat.Text += "<hr/>" + string.Format("<em>Cập nhật tiếp độ: {0}%</em>", trackBar.Value);
+                hasHorizonalLine = false;
+            }
+            if (IsTrackBarChanged && trackValue > 0 && task.Status != 1)
+            {
+                chat.Text += hasHorizonalLine ? "<hr/>" : "<br/>";
+                chat.Text += string.Format("<em>Cập nhật Tình trạng: {0}</em>", "Đang thực hiện");
+                task.Status = 1;
+            }
+            else if (IsTrackBarChanged && trackValue == 100 && task.Status != 3)
+            {
+                chat.Text += hasHorizonalLine ? "<hr/>" : "<br/>";
+                chat.Text += string.Format("<em>Cập nhật Tình trạng: {0}</em>", "Hoàn thành");
+                task.Status = 3;
+            }
+            task.PercentCompleted = trackValue;
         }
 
         private TaskExtra CurrentTask

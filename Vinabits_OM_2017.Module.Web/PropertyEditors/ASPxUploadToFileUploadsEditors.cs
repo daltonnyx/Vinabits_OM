@@ -157,7 +157,8 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
             viewPanel.Controls.Add(lblSize);
             viewPanel.Controls.Add(lblType);
             viewPanel.Controls.Add(new LiteralControl("<p><br /></p>"));
-            viewPanel.Controls.Add(iframeShow);
+            if(CurrentObject is DocumentFile)
+                viewPanel.Controls.Add(iframeShow);
 
             //return viewPanel;
         }

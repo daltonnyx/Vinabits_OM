@@ -383,6 +383,14 @@
       <DependentUpon>Model.xafml</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="UnusableNodes8.xml">
+      <DependentUpon>Model.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="UnusableNodes9.xml">
+      <DependentUpon>Model.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="UserControl\DepartmentUsercontrol.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

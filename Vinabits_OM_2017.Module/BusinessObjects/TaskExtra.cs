@@ -32,7 +32,7 @@ namespace Vinabits_OM_2017.Module.BusinessObjects
     [XafDefaultProperty("Subject")]
     [XafDisplayName("Công việc")]
     [ImageName("BO_Task")]
-    public class TaskExtra : BaseObject, IEvent
+    public class TaskExtra : BaseObject, IEvent, IMultiUpload
     {
         public TaskExtra(Session session)
             : base(session)
@@ -225,9 +225,18 @@ namespace Vinabits_OM_2017.Module.BusinessObjects
         [ImmediatePostData]
         [Association("TaskExtra-TaskExtraFiles", typeof(TaskExtraFile))]
         [XafDisplayName("File đính kèm")]
-        public XPCollection TaskExtraFiles
+        public XPCollection FileAttachments
         {
-            get { return GetCollection("TaskExtraFiles"); }
+            get { return GetCollection("FileAttachments"); }
+        }
+
+        [NonPersistent]
+        [XafDisplayName("Upload Files")]
+        [VisibleInListView(false)]
+        [ModelDefault("PropertyEditorType", "Vinabits_OM_2017.Module.Web.PropertyEditors.MultiFileUploadEditor")]
+        public string MultiUpload
+        {
+            get; set;
         }
 
         [Association("TaskExtra-NoteExtra", typeof(NoteExtra))]
