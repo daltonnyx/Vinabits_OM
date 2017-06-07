@@ -190,6 +190,12 @@
     <Compile Include="Controllers\CongViec\TaskDetailViewController.Designer.cs">
       <DependentUpon>TaskDetailViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\CongViec\TaskFileUploadViewController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\CongViec\TaskFileUploadViewController.Designer.cs">
+      <DependentUpon>TaskFileUploadViewController.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\Global\ChangeNewEditorViewController.cs">
       <SubType>Component</SubType>
     </Compile>
