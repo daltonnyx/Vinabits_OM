@@ -34,17 +34,7 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
         {
             ASPxScheduler control = base.CreateSchedulerControl();
             //control.InitAppointmentDisplayText += Control_InitAppointmentDisplayText;
-            control.WorkWeekView.ShowWorkTimeOnly = true;
-            control.WorkWeekView.WorkTime.Start = TimeSpan.Parse("06:00:00");
-            control.WorkWeekView.WorkTime.End = TimeSpan.Parse("18:00:00");
-            control.WorkDays.Add(WeekDays.Saturday);
-            control.TimelineView.Enabled = false;
-            control.MonthView.Enabled = false;
-            control.WeekView.AppointmentDisplayOptions.AppointmentHeight = 130;
-            control.WeekView.MoreButtonHTML = "Xem";
-            control.WeekView.AppointmentDisplayOptions.AutoAdjustForeColor = true;
-            control.WeekView.CellAutoHeightOptions.Mode = AutoHeightMode.FitToContent;
-            control.CssClass = "aspxscheduler";
+            
             return control;
         }
 
@@ -52,6 +42,22 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
         {
             base.OnControlsCreated();
             Employee currentEmployee = SecuritySystem.CurrentUser as Employee;
+
+            this.SchedulerControl.WorkWeekView.ShowWorkTimeOnly = true;
+            this.SchedulerControl.WorkWeekView.WorkTime.Start = TimeSpan.Parse("06:00:00");
+            this.SchedulerControl.WorkWeekView.WorkTime.End = TimeSpan.Parse("18:00:00");
+            this.SchedulerControl.WorkDays.Add(WeekDays.Saturday);
+            this.SchedulerControl.TimelineView.Enabled = false;
+            this.SchedulerControl.MonthView.Enabled = false;
+            this.SchedulerControl.WeekView.AppointmentDisplayOptions.AppointmentHeight = 130;
+            this.SchedulerControl.WeekView.MoreButtonHTML = "Xem thêm";
+            this.SchedulerControl.WeekView.AppointmentDisplayOptions.AutoAdjustForeColor = true;
+            this.SchedulerControl.WeekView.CellAutoHeightOptions.Mode = AutoHeightMode.FitToContent;
+            this.SchedulerControl.CssClass = "aspxscheduler";
+            this.SchedulerControl.WorkWeekView.MoreButtonHTML = "Xem thêm";
+            this.SchedulerControl.ActiveView.ShowMoreButtons = true;
+            this.SchedulerControl.OptionsCustomization.AllowAppointmentResize = UsedAppointmentType.None;
+
             bool isTasker = currentEmployee.EmployeeRoles.Where(role => role.Name == "Tasker").Count() > 0;
             if (!isTasker)
                 this.SchedulerControl.OptionsCustomization.AllowAppointmentDrag = UsedAppointmentType.None;
