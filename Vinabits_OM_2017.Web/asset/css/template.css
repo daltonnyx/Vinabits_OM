@@ -1,0 +1,87 @@
+﻿body {
+}
+.xafNav > .xafContent {
+    width: 230px !important;
+}
+.sizeLimit {
+    max-width: 100%;
+}
+
+@media screen and (min-width: 1400px) {
+    .sizeLimit {
+        max-width: 1400px;
+    }
+}
+.paddings {
+    padding-left:15px;
+    padding-right: 15px;
+}
+.dxgvControl_XafTheme, .dxgvDisabled_XafTheme { font: 15px 'Segoe UI','Helvetica Neue','Droid Sans',Arial,Tahoma,Geneva,Sans-serif !important;    color: #4a4a4a;    background-color: #FFFFFF;    cursor: default;}
+.CardGroupContent {
+    padding: 3px 10px 15px 10px;
+    background-color: white;
+}
+
+
+div .LayoutTabContainer {
+    padding: 5px;
+}
+
+div .GroupContent.lastEditorContainer .Item {
+    padding: 5px;
+}
+
+.dxheControl_XafTheme td.dxheDesignViewArea_XafTheme {height: auto !important;}
+
+.Box {
+    padding: 15px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.Box h5 {
+    font-size: 14px;
+    margin: 0px;
+    margin-bottom: 5px;
+}
+
+.Box > span.date {
+    font-size: smaller;
+    color: #666;
+    font-style: italic;
+    text-align: right;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.aspxscheduler .dxsc-content-wrapper > span, 
+.aspxscheduler  .dxsc-apt-center-container > span {
+    white-space: pre-wrap;
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    font-size: 15px;
+}
+
+.aspxscheduler  .dxsc-apt-center-container {
+    display: inline-block;
+    width:100%;
+}
+
+.dxtlNode_XafTheme td.dxtl, .dxtlAltNode_XafTheme  td.dxtl, .dxtlSelectedNode_XafTheme td.dxtl, .dxtlFocusedNode_XafTheme td.dxtl, .dxtlEditFormDisplayNode_XafTheme td.dxtl, .dxtlCommandCell_XafTheme {
+    padding: 2px 10px;
+}
+
+.dxtlIndentWithButton_XafTheme {
+    padding: 3px 4px;
+}
+
+.Item {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+div .GroupContent.lastEditorContainer .Item {
+    padding: 2px;
+}

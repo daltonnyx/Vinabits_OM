@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Title="Vinabits OM 2017">
+  <BOModel>
+    <Class Name="DevExpress.Persistent.BaseImpl.Address" Caption="Địa chỉ" />
+    <Class Name="DevExpress.Persistent.BaseImpl.Country" Caption="Quốc gia" />
+    <Class Name="DevExpress.Persistent.BaseImpl.Event" Caption="Lịch công việc" />
+    <Class Name="DevExpress.Persistent.BaseImpl.Note" Caption="Ghi chú" />
+    <Class Name="DevExpress.Persistent.BaseImpl.PhoneNumber" Caption="Số điện thoại" />
+  </BOModel>
+  <Options>
+    <LayoutManagerOptions RequiredFieldMark="*" />
+  </Options>
+  <SchemaModules>
+    <SchemaModule Name="SchedulerModuleBase" Version="16.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="16.2.3.0" IsNewNode="True" />
+  </SchemaModules>
+</Application>

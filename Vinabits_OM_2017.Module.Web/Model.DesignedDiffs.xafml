@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Options CollectionsEditMode="Edit" />
+  <SchemaModules>
+    <SchemaModule Name="SchedulerAspNetModule" Version="16.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="16.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="16.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="16.2.3.0" IsNewNode="True" />
+  </SchemaModules>
+  <Views>
+    <ListView Id="TaskExtra_Documents_ListView">
+      <Columns>
+        <ColumnInfo Id="ActionInfo" Index="-1" />
+        <ColumnInfo Id="DateCreated" Index="-1" />
+        <ColumnInfo Id="DepartmentMain" Index="-1" />
+        <ColumnInfo Id="DocDateReceived" Index="-1" />
+        <ColumnInfo Id="DocDateSent" Index="-1" />
+        <ColumnInfo Id="DocOrganization" Index="-1" />
+        <ColumnInfo Id="DocSaveId" Index="-1" />
+        <ColumnInfo Id="DocSignees" Index="-1" />
+        <ColumnInfo Id="Doctype" Index="-1" />
+        <ColumnInfo Id="EmpApproved" Index="-1" />
+        <ColumnInfo Id="EmployeeCreated" Index="-1" />
+        <ColumnInfo Id="InOutDocument" Index="-1" />
+        <ColumnInfo Id="IsApproveed" Index="-1" />
+        <ColumnInfo Id="ParentDocument" Index="-1" />
+        <ColumnInfo Id="DocDate" Index="1" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>
