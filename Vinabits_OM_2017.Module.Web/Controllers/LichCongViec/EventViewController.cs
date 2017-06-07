@@ -62,10 +62,12 @@ namespace Vinabits_OM_2017.Module.Web.Controllers
 
         private void EventViewController_ControlCreated1(object sender, EventArgs e)
         {
-            ((ASPxDateTimePropertyEditor)sender).Editor.TimeSectionProperties.Visible = true;
-            ((ASPxDateTimePropertyEditor)sender).Editor.TimeSectionProperties.TimeEditProperties.EditFormatString = "HH:mm";
-            ((ASPxDateTimePropertyEditor)sender).Editor.TimeSectionProperties.OkButtonText = "Xong";
-            ((ASPxDateTimePropertyEditor)sender).Editor.TimeSectionProperties.ShowCancelButton = false;
+            if (((ASPxDateTimePropertyEditor)sender).Editor != null) { 
+                ((ASPxDateTimePropertyEditor)sender).Editor.TimeSectionProperties.Visible = true;
+                ((ASPxDateTimePropertyEditor)sender).Editor.TimeSectionProperties.TimeEditProperties.EditFormatString = "HH:mm";
+                ((ASPxDateTimePropertyEditor)sender).Editor.TimeSectionProperties.OkButtonText = "Xong";
+                ((ASPxDateTimePropertyEditor)sender).Editor.TimeSectionProperties.ShowCancelButton = false;
+            }
         }
 
         private void EventViewController_ControlCreated(object sender, EventArgs e)
