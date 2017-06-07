@@ -281,6 +281,7 @@ namespace Vinabits_OM_2017.Module.Web.Controllers
                 congViecMoi.EmployeeCreated = os.FindObject<Employee>(new BinaryOperator("Oid", SecuritySystem.CurrentUserId));
                 congViecMoi.Documents.Add(os.GetObject<Document>((Document)View.CurrentObject));
                 congViecMoi.Description = ((Document)View.CurrentObject).Excerpt;
+                congViecMoi.Subject = ((Document)View.CurrentObject).Excerpt;
                 //congViecMoi.Save();
                 DetailView dv = Application.CreateDetailView(os, "TaskExtra_DetailView_New", true, congViecMoi);
                 dv.ViewEditMode = ViewEditMode.Edit;
