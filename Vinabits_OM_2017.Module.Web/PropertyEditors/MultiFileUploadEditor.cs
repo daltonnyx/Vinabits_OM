@@ -134,12 +134,23 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
                     appUrl = HttpContext.Current.Request.Url.Authority;
                 fileuploads.FileUrl = string.Format("{0}{1}{2}", appUrl, fileuploads.FileRealPath.Replace(appDir, ""), fileuploads.FileName);
                 fileuploads.Save();
-                DocumentFile docFile = new DocumentFile(sess);
-                docFile.DocFile = fileuploads;
-                docFile.Document = View.CurrentObject as Document;
-                docFile.UploadComplete = true;
-                docFile.Save();
-                current.FileAttachments.Add(docFile);
+                if(CurrentObject is Document) { 
+                    DocumentFile docFile = new DocumentFile(sess);
+                    docFile.DocFile = fileuploads;
+                    docFile.Document = View.CurrentObject as Document;
+                    docFile.UploadComplete = true;
+                    docFile.Save();
+                    current.FileAttachments.Add(docFile);
+                }
+                else if (CurrentObject is TaskExtra)
+                {
+                    TaskExtraFile taskFile = new TaskExtraFile(sess);
+                    taskFile.UpFile = fileuploads;
+                    taskFile.TaskExtra = View.CurrentObject as TaskExtra;
+                    taskFile.UploadComplete = true;
+                    taskFile.Save();
+                    current.FileAttachments.Add(taskFile);
+                }
                 //sess.CommitTransaction();
                 //fileuploads.Session.CommitTransaction();
             }
