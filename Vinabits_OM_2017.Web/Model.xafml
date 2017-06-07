@@ -125,6 +125,11 @@
         <Member Name="TaskAssignedTo" LookupEditorMode="AllItems" />
       </OwnMembers>
     </Class>
+    <Class Name="Vinabits_OM_2017.Module.BusinessObjects.TaskExtraFile">
+      <OwnMembers>
+        <Member Name="UpFile" PropertyEditorType="Vinabits_OM_2017.Module.Web.PropertyEditors.ASPxUploadToFileUploadsEditors" Caption="File đính kèm" />
+      </OwnMembers>
+    </Class>
     <Class Name="Vinabits_OM_2017.Module.Configuration" ImageName="Action_Printing_PageSetup">
       <OwnMembers>
         <Member Name="CheckDBVersion" Caption="Kiểm tra phiên bản" />
@@ -1362,12 +1367,14 @@
         <PropertyEditor Id="EmployeeCreated" PropertyName="EmployeeCreated" IsNewNode="True" />
         <PropertyEditor Id="EmployeeReceiveds" PropertyName="EmployeeReceiveds" View="TaskExtra_EmployeeReceiveds_ListView" IsNewNode="True" />
         <PropertyEditor Id="EndOn" PropertyName="EndOn" IsNewNode="True" />
+        <PropertyEditor Id="FileAttachments" PropertyName="FileAttachments" View="TaskExtra_FileAttachments_ListView" IsNewNode="True" />
         <PropertyEditor Id="FirstNote" PropertyName="FirstNote" IsNewNode="True" />
         <PropertyEditor Id="Label" PropertyName="Label" IsNewNode="True" />
         <PropertyEditor Id="LastDateUpdated" PropertyName="LastDateUpdated" IsNewNode="True" />
         <PropertyEditor Id="LastNote" PropertyName="LastNote" IsNewNode="True" />
         <PropertyEditor Id="ListEmployeeReceived" PropertyName="ListEmployeeReceived" IsNewNode="True" />
         <PropertyEditor Id="Location" PropertyName="Location" IsNewNode="True" />
+        <PropertyEditor Id="MultiUpload" PropertyName="MultiUpload" IsNewNode="True" />
         <PropertyEditor Id="NoteExtras" PropertyName="NoteExtras" View="TaskExtra_NoteExtras_ListView" IsNewNode="True" />
         <PropertyEditor Id="PercentCompleted" PropertyName="PercentCompleted" IsNewNode="True" />
         <PropertyEditor Id="ResourceId" PropertyName="ResourceId" IsNewNode="True" />
@@ -1377,15 +1384,14 @@
         <PropertyEditor Id="Subject" PropertyName="Subject" IsNewNode="True" />
         <PropertyEditor Id="TaskAssignedTo" PropertyName="TaskAssignedTo" IsNewNode="True" />
         <PropertyEditor Id="TaskDueDate" PropertyName="TaskDueDate" IsNewNode="True" />
-        <PropertyEditor Id="TaskExtraFiles" PropertyName="TaskExtraFiles" View="TaskExtra_TaskExtraFiles_ListView" IsNewNode="True" />
         <PropertyEditor Id="Type" PropertyName="Type" IsNewNode="True" />
       </Items>
       <Layout IsNewNode="True">
         <LayoutGroup Id="Main" Index="0" ShowCaption="False" RelativeSize="100" IsNewNode="True">
-          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="False" RelativeSize="24.169986719787516" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="False" RelativeSize="24.96570644718793" IsNewNode="True">
             <TabbedGroup Id="Item1" CaptionLocation="Top" Index="0" RelativeSize="73.626373626373621" IsNewNode="True">
               <LayoutGroup Id="TaskExtra" ShowCaption="True" Caption="Thông tin công việc" Direction="Horizontal" Index="0" RelativeSize="100" IsNewNode="True">
-                <LayoutGroup Id="TaskExtra_col1" ShowCaption="False" Index="0" RelativeSize="47.515923566878982" IsNewNode="True">
+                <LayoutGroup Id="TaskExtra_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
                   <LayoutItem Id="Subject" ViewItem="Subject" Index="0" RelativeSize="34.042553191489361" IsNewNode="True" />
                   <LayoutItem Id="TaskAssignedTo" ViewItem="TaskAssignedTo" Index="1" RelativeSize="25.531914893617021" IsNewNode="True" />
                   <LayoutGroup Id="Auto11c864ce-5f67-417c-8dfc-324aa0b3eba2" ShowCaption="False" Caption="Auto11c864ce-5f67-417c-8dfc-324aa0b3eba2(8)" Direction="Horizontal" Index="2" RelativeSize="40.425531914893618" IsNewNode="True">
@@ -1393,19 +1399,19 @@
                     <LayoutItem Id="EndOn" ViewItem="EndOn" Index="1" RelativeSize="49.329758713136727" IsNewNode="True" />
                   </LayoutGroup>
                 </LayoutGroup>
-                <LayoutGroup Id="TaskExtra_col2" ShowCaption="False" Index="1" RelativeSize="52.484076433121018" IsNewNode="True">
+                <LayoutGroup Id="TaskExtra_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
                   <LayoutItem Id="DateCreated" ViewItem="DateCreated" Index="0" RelativeSize="34.042553191489361" IsNewNode="True" />
                   <LayoutItem Id="EmployeeCreated" ViewItem="EmployeeCreated" Index="1" RelativeSize="25.531914893617021" IsNewNode="True" />
                   <LayoutGroup Id="Autoae8bf0ca-b795-4b27-9b7f-d446092441e5" ShowCaption="False" Caption="Autoae8bf0ca-b795-4b27-9b7f-d446092441e5(14)" Direction="Horizontal" Index="2" RelativeSize="40.425531914893618" IsNewNode="True">
-                    <LayoutItem Id="Status" ViewItem="Status" Index="0" RelativeSize="46.601941747572816" IsNewNode="True" />
-                    <LayoutItem Id="PercentCompleted" ViewItem="PercentCompleted" Index="1" RelativeSize="53.398058252427184" IsNewNode="True" />
+                    <LayoutItem Id="Status" ViewItem="Status" Index="0" RelativeSize="49.329758713136727" IsNewNode="True" />
+                    <LayoutItem Id="PercentCompleted" ViewItem="PercentCompleted" Index="1" RelativeSize="50.670241286863273" IsNewNode="True" />
                   </LayoutGroup>
                 </LayoutGroup>
               </LayoutGroup>
             </TabbedGroup>
             <LayoutItem Id="Description" ViewItem="Description" Index="1" RelativeSize="26.373626373626372" CaptionLocation="Top" IsNewNode="True" />
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" Index="1" RelativeSize="75.830013280212484" IsNewNode="True">
+          <TabbedGroup Id="Tabs" Index="1" RelativeSize="75.034293552812073" IsNewNode="True">
             <LayoutGroup Id="Documents" Index="0" ShowCaption="True" RelativeSize="100" Caption="Văn bản liên quan" IsNewNode="True">
               <LayoutItem Id="Documents" ViewItem="Documents" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
@@ -1413,7 +1419,8 @@
               <LayoutItem Id="EmployeeReceiveds" ViewItem="EmployeeReceiveds" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="TaskExtraFiles" ShowCaption="True" Caption="File đính kèm" Index="2" RelativeSize="100" IsNewNode="True">
-              <LayoutItem Id="TaskExtraFiles" ViewItem="TaskExtraFiles" Index="0" RelativeSize="100" IsNewNode="True" />
+              <LayoutItem Id="MultiUpload" ViewItem="MultiUpload" Index="0" RelativeSize="6.3492063492063489" ShowCaption="False" IsNewNode="True" />
+              <LayoutItem Id="FileAttachments" ViewItem="FileAttachments" Index="1" RelativeSize="93.650793650793645" IsNewNode="True" />
             </LayoutGroup>
           </TabbedGroup>
         </LayoutGroup>
@@ -1460,6 +1467,7 @@
         <ColumnInfo Id="PhoneEmp" Index="5" Width="125" />
       </Columns>
     </ListView>
+    <ListView Id="TaskExtra_FileAttachments_ListView" AllowLink="False" AllowNew="False" AllowUnlink="False" />
     <ListView Id="TaskExtra_ListView_List" ClassName="Vinabits_OM_2017.Module.BusinessObjects.TaskExtra" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" IsNewNode="True">
       <Columns IsNewNode="True">
         <ColumnInfo Id="AllDay" PropertyName="AllDay" Width="50" Index="-1" IsNewNode="True" />
