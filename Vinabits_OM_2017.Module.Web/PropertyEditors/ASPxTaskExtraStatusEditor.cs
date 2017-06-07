@@ -39,7 +39,7 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
             }
         }
 
-        private string getCaption(int value)
+        public static string getCaption(int value)
         {
             string caption = string.Empty;
             switch (value)
