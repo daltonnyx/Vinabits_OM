@@ -57,7 +57,7 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
         {
             get
             {
-                return CurrentTask.TaskAssignedTo.Oid == Guid.Parse(SecuritySystem.CurrentUserId.ToString());
+                return CurrentTask.TaskAssignedTo.Oid == Guid.Parse(SecuritySystem.CurrentUserId.ToString()) && CurrentTask.Status != 4;
             }
         }
 
@@ -80,6 +80,7 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
             container = new ASPxCallbackPanel();
             container.ClientInstanceName = "_ChatBox_Callback_Panel_";
             container.Callback += Container_Callback;
+            container.ClientSideEvents.EndCallback = @"function(e){ eval('__ChatBox_Grid_').Refresh(); }";
             container.Controls.Add(htmlEditor);
             container.Controls.Add(this.CreateBottomPanel());
             container.Controls.Add(submit);
@@ -97,7 +98,7 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
             control.Style.Add("color", "#fff");
             control.ClientSideEvents.Click = @"function(e) { 
                 if(window.confirm('Bạn có muốn tạm dừng công việc này không?')) {
-                    eval('_ChatBox_Callback_Panel_').PerformCallback('PAUSE');eval('__ChatBox_Grid_').Refresh(); 
+                    eval('_ChatBox_Callback_Panel_').PerformCallback('PAUSE');
                 }
             }";
             if (!IsCurrentCanUpdate)
@@ -284,9 +285,20 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
                 chat.Text += "<hr/>";
                 chat.Text += string.Format("<em>Cập nhật Tình trạng: <span style=\"color:red;\">{0}</span></em>", "Hủy bỏ");
                 task.Status = 4;
-                task.PercentCompleted = 0;
-                trackBar.Value = 0;
+                this.DisableControlAfterCancelled();
             }
+        }
+
+        private void DisableControlAfterCancelled()
+        {
+            trackBar.Enabled = false;
+            cancel.ClientEnabled = false;
+            cancel.Enabled = false;
+            submit.Enabled = false;
+            submit.ClientEnabled = false;
+            pause.ClientEnabled = false;
+            pause.Enabled = false;
+
         }
 
         private void PauseTask(TaskExtra task, NoteExtra chat)
@@ -306,20 +318,20 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
             if (IsTrackBarChanged && CanUpdateTrackbar)
             {
 
-                chat.Text += "<hr/>" + string.Format("<em>Cập nhật tiếp độ: {0}%</em>", trackBar.Value);
+                chat.Text += "<hr/>" + string.Format("<em>Cập nhật tiến độ: {0}%</em>", trackBar.Value);
                 hasHorizonalLine = false;
             }
-            if (IsTrackBarChanged && trackValue > 0 && task.Status != 1)
-            {
-                chat.Text += hasHorizonalLine ? "<hr/>" : "<br/>";
-                chat.Text += string.Format("<em>Cập nhật Tình trạng: {0}</em>", "Đang thực hiện");
-                task.Status = 1;
-            }
-            else if (IsTrackBarChanged && trackValue == 100 && task.Status != 3)
+            if (trackValue == 100 && task.Status != 3)
             {
                 chat.Text += hasHorizonalLine ? "<hr/>" : "<br/>";
                 chat.Text += string.Format("<em>Cập nhật Tình trạng: {0}</em>", "Hoàn thành");
                 task.Status = 3;
+            }
+            else if (trackValue > 0 && task.Status != 1)
+            {
+                chat.Text += hasHorizonalLine ? "<hr/>" : "<br/>";
+                chat.Text += string.Format("<em>Cập nhật Tình trạng: {0}</em>", "Đang thực hiện");
+                task.Status = 1;
             }
             task.PercentCompleted = trackValue;
         }
