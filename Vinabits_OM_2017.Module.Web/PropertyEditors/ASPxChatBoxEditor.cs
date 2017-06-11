@@ -138,6 +138,11 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
             control.Style.Add("background-color", "#00C853");
             control.Style.Add("color", "#fff");
             control.ClientSideEvents.Click = @"function(e) { eval('_ChatBox_Callback_Panel_').PerformCallback('UPDATE');eval('__ChatBox_Grid_').Refresh(); }";
+            if (!IsCurrentCanUpdate)
+            {
+                control.Enabled = false;
+                control.ClientEnabled = false;
+            }
             return control;
         }
 
