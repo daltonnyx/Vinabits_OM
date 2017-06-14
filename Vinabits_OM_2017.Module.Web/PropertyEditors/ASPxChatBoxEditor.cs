@@ -133,12 +133,15 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
         protected ASPxButton CreateSubmitButton()
         {
             ASPxButton control = new ASPxButton();
-            control.Text = "Cập nhật";
+            if (CurrentTask.Status == 0 && IsCurrentCanUpdate)
+                control.Text = "Bắt đầu";
+            else
+                control.Text = "Cập nhật"; 
             control.AutoPostBack = false;
             control.Style.Add("background-color", "#00C853");
             control.Style.Add("color", "#fff");
             control.ClientSideEvents.Click = @"function(e) { eval('_ChatBox_Callback_Panel_').PerformCallback('UPDATE');eval('__ChatBox_Grid_').Refresh(); }";
-            if (!IsCurrentCanUpdate)
+            if (CurrentTask.Status == 4)
             {
                 control.Enabled = false;
                 control.ClientEnabled = false;
@@ -324,9 +327,21 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
             {
 
                 chat.Text += "<hr/>" + string.Format("<em>Cập nhật tiến độ: {0}%</em>", trackBar.Value);
+                
                 hasHorizonalLine = false;
             }
-            if (trackValue == 100 && task.Status != 3)
+            //Prevent change from Unexpected source
+            if (!IsCurrentCanUpdate)
+                return;
+            task.PercentCompleted = trackValue;
+            if (task.Status == 0)
+            {
+                chat.Text += hasHorizonalLine ? "<hr/>" : "<br/>";
+                chat.Text += string.Format("<em>Cập nhật Tình trạng: {0}</em>", "Đang thực hiện");
+                submit.Text = "Cập nhật";
+                task.Status = 1;
+            }
+            else if (trackValue == 100 && task.Status != 3)
             {
                 chat.Text += hasHorizonalLine ? "<hr/>" : "<br/>";
                 chat.Text += string.Format("<em>Cập nhật Tình trạng: {0}</em>", "Hoàn thành");
@@ -338,7 +353,6 @@ namespace Vinabits_OM_2017.Module.Web.PropertyEditors
                 chat.Text += string.Format("<em>Cập nhật Tình trạng: {0}</em>", "Đang thực hiện");
                 task.Status = 1;
             }
-            task.PercentCompleted = trackValue;
         }
 
         private TaskExtra CurrentTask
