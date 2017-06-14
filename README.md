@@ -7,9 +7,6 @@ Bản quyền thuộc: Vinabits, 2006-2016 .:. www.vinabits.com.vn
 Giấy chứng nhận bản quyền số: 2580/2009/QTG ngày 03/08/2009
 do CỤC BẢN QUYỀN TÁC GIẢ - BỘ VĂN HÓA THỂ THAO VÀ DU LỊCH cấp.
 
-# TÀI LIỆU HƯỚNG DẪN SỬ DỤNG
-Office Management 2017
-
 # A. Giới thiệu về OM 2017
 Hãy tưởng tượng giữa việc bạn đang lục lọi tìm một văn bản trong kho,
 việc bạn cố nhớ lại xem trong tuần mình đã làm gì, công việc đã đến đâu VỚI
