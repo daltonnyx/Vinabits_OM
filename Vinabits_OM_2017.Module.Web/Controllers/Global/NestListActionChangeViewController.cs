@@ -16,6 +16,7 @@ using DevExpress.Persistent.Validation;
 using DevExpress.ExpressApp.Web.SystemModule;
 using DevExpress.ExpressApp.Web.Editors.ASPx;
 using DevExpress.Web;
+using Vinabits_OM_2017.Module.BusinessObjects;
 
 namespace Vinabits_OM_2017.Module.Web.Controllers
 {
@@ -124,12 +125,20 @@ namespace Vinabits_OM_2017.Module.Web.Controllers
 
         private void ProcessCurrentObjectController_CustomProcessSelectedItem(object sender, CustomProcessListViewSelectedItemEventArgs e)
         {
-            var act = sender as ListViewProcessCurrentObjectController;
-            if (act != null)
-            {
-                act.Active.SetItemValue("DisableThisAction", false);
-            }
             e.Handled = true;
+            if (e.InnerArgs.CurrentObject is Document && !View.IsRoot)
+            {
+                DetailView docSimpleView = Application.CreateDetailView(View.ObjectSpace, "DocumentSimple_DetailView", false, e.InnerArgs.CurrentObject);
+                e.InnerArgs.ShowViewParameters.CreatedView = docSimpleView;
+            }
+            else {
+                var act = sender as ListViewProcessCurrentObjectController;
+                if (act != null)
+                {
+                    act.Active.SetItemValue("DisableThisAction", false);
+                }
+                
+            }
         }
 
         protected override void OnViewControlsCreated()
