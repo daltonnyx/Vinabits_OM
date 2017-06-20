@@ -953,6 +953,73 @@
         <ColumnInfo Id="IsApproveed" Index="6" />
       </Columns>
     </ListView>
+    <DetailView Id="DocumentSimple_DetailView" ClassName="Vinabits_OM_2017.Module.BusinessObjects.Document" IsNewNode="True">
+      <Items IsNewNode="True">
+        <ActionContainerViewItem Id="@Thao_tac" Caption="@Thao_tac(24)" ActionContainer="@Document_Action" IsNewNode="True" />
+        <PropertyEditor Id="ActionInfo" PropertyName="ActionInfo" Caption="Thông tin tác động" IsNewNode="True" />
+        <PropertyEditor Id="ContentApproved" PropertyName="ContentApproved" Caption="Nội dung chỉ đạo" IsNewNode="True" />
+        <PropertyEditor Id="DateCreated" PropertyName="DateCreated" IsNewNode="True" />
+        <PropertyEditor Id="DepartmentMain" PropertyName="DepartmentMain" IsNewNode="True" />
+        <PropertyEditor Id="DepartmentReceiveds" PropertyName="DepartmentReceiveds" View="Document_DepartmentReceiveds_ListView" IsNewNode="True" />
+        <PropertyEditor Id="DepartmentReceivedsSelected" PropertyName="DepartmentReceivedsSelected" View="Document_DepartmentReceivedsSelected_ListView" IsNewNode="True" />
+        <PropertyEditor Id="DocDate" PropertyName="DocDate" IsNewNode="True" />
+        <PropertyEditor Id="DocDateReceived" PropertyName="DocDateReceived" IsNewNode="True" />
+        <PropertyEditor Id="DocDateSent" PropertyName="DocDateSent" IsNewNode="True" />
+        <PropertyEditor Id="DocId" PropertyName="DocId" IsNewNode="True" />
+        <PropertyEditor Id="DocOrganization" PropertyName="DocOrganization" IsNewNode="True" />
+        <PropertyEditor Id="DocSaveId" PropertyName="DocSaveId" IsNewNode="True" />
+        <PropertyEditor Id="DocSignees" PropertyName="DocSignees" IsNewNode="True" />
+        <PropertyEditor Id="Doctype" PropertyName="Doctype" IsNewNode="True" />
+        <PropertyEditor Id="EmpApproved" PropertyName="EmpApproved" IsNewNode="True" />
+        <PropertyEditor Id="EmployeeCreated" PropertyName="EmployeeCreated" IsNewNode="True" />
+        <PropertyEditor Id="EmployeeReceiveds" PropertyName="EmployeeReceiveds" View="Document_EmployeeReceiveds_ListView" IsNewNode="True" />
+        <PropertyEditor Id="Excerpt" PropertyName="Excerpt" IsNewNode="True" />
+        <PropertyEditor Id="FileAttachments" PropertyName="FileAttachments" View="Document_FileAttachments_ListView" IsNewNode="True" />
+        <PropertyEditor Id="getListEmployeeReceiveds" PropertyName="getListEmployeeReceiveds" View="Document_getListEmployeeReceiveds_ListView" IsNewNode="True" />
+        <PropertyEditor Id="InOutDocument" PropertyName="InOutDocument" IsNewNode="True" />
+        <PropertyEditor Id="IsApproveed" PropertyName="IsApproveed" IsNewNode="True" />
+        <PropertyEditor Id="MultiUpload" PropertyName="MultiUpload" IsNewNode="True" />
+        <PropertyEditor Id="Note" PropertyName="Note" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="ParentDocument" PropertyName="ParentDocument" IsNewNode="True" />
+        <PropertyEditor Id="TaskExtra" PropertyName="TaskExtra" IsNewNode="True" />
+        <PropertyEditor Id="Title" PropertyName="Title" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" RelativeSize="100" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" ShowCaption="False" Index="0" RelativeSize="25.401069518716579" IsNewNode="True">
+            <LayoutGroup Id="Document" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True">
+              <LayoutGroup Id="Document_col2" ShowCaption="False" Index="0" RelativeSize="100" Direction="Horizontal" IsNewNode="True">
+                <LayoutItem Id="ActionInfo" ViewItem="ActionInfo" Index="0" RelativeSize="27.086882453151617" CaptionLocation="Top" IsNewNode="True" />
+                <LayoutGroup Id="Auto23490532-bb47-40cd-9558-88d14554b4e1" ShowCaption="True" Caption="Thông tin chung" Index="1" RelativeSize="72.913117546848383" Direction="Horizontal" IsNewNode="True">
+                  <LayoutGroup Id="Autode0e2954-ed00-4623-a80b-fdc921c16f5a" ShowCaption="False" Caption="Autode0e2954-ed00-4623-a80b-fdc921c16f5a(7)" Index="0" RelativeSize="44.987775061124694" IsNewNode="True">
+                    <LayoutGroup Id="Auto61e595f5-2fac-4a03-a6c9-167ea2b22d05" ShowCaption="False" Caption="Auto61e595f5-2fac-4a03-a6c9-167ea2b22d05(5)" Index="0" RelativeSize="25.333333333333332" IsNewNode="True">
+                      <LayoutItem Id="Doctype" ShowCaption="True" ViewItem="Doctype" Index="0" RelativeSize="100" CaptionLocation="Left" IsNewNode="True" />
+                    </LayoutGroup>
+                    <LayoutItem Id="DocDate" ViewItem="DocDate" CaptionLocation="Left" Index="1" RelativeSize="16" IsNewNode="True" />
+                    <LayoutItem Id="DocOrganization" ViewItem="DocOrganization" Index="2" RelativeSize="16" CaptionLocation="Left" IsNewNode="True" />
+                    <LayoutItem Id="DocDateSent" ViewItem="DocDateSent" Index="3" RelativeSize="16" CaptionLocation="Left" IsNewNode="True" />
+                    <LayoutItem Id="DocDateReceived" ViewItem="DocDateReceived" Index="4" RelativeSize="26.666666666666668" CaptionLocation="Left" IsNewNode="True" />
+                  </LayoutGroup>
+                  <LayoutGroup Id="Auto41867d0e-fa95-4e39-b33b-b261139a54a5" ShowCaption="False" Caption="Auto41867d0e-fa95-4e39-b33b-b261139a54a5(14)" Index="1" RelativeSize="55.012224938875306" IsNewNode="True">
+                    <LayoutItem Id="DocId" ViewItem="DocId" CaptionLocation="Left" Index="0" RelativeSize="21.333333333333332" IsNewNode="True" />
+                    <LayoutItem Id="DocSaveId" ViewItem="DocSaveId" Index="1" RelativeSize="16" CaptionLocation="Left" IsNewNode="True" />
+                    <LayoutItem Id="Excerpt" ViewItem="Excerpt" CaptionLocation="Top" SizeConstraintsType="Custom" MinSize="20, 94" MaxSize="0, 94" Index="2" RelativeSize="62.666666666666664" IsNewNode="True" />
+                  </LayoutGroup>
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="SizeableEditors" ShowCaption="False" Index="1" RelativeSize="74.598930481283418" IsNewNode="True">
+            <LayoutGroup Id="Autodfdab1ec-dd58-4487-9537-46e1f147dbbd" ShowCaption="False" Caption="Autodfdab1ec-dd58-4487-9537-46e1f147dbbd(12)" Index="0" RelativeSize="100" IsNewNode="True">
+              <LayoutGroup Id="Autoa7399772-1262-4ad1-865f-99d1c828b7a5" ShowCaption="False" Caption="Autoa7399772-1262-4ad1-865f-99d1c828b7a5(13)" Index="0" RelativeSize="100" IsNewNode="True">
+                <LayoutItem Id="FileAttachments" ViewItem="FileAttachments" Index="0" RelativeSize="100" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <DetailView Id="Employee_DetailView">
       <Items>
         <PropertyEditor Id="LastName" Caption="Họ &amp; tên" />
