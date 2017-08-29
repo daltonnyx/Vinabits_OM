@@ -8,7 +8,9 @@
       <Action Id="Delete" PaintStyle="CaptionAndImage" />
       <Action Id="Delete Item" PaintStyle="CaptionAndImage" />
       <Action Id="EventScheduleReport" ImageName="TemplatesV2Images.Action_ShowHideDateNavigator" />
+      <Action Id="Export" Caption="Xuất báo cáo" />
       <Action Id="ResetPassword" Caption="Thiết lập lại mật khẩu" />
+      <Action Id="SetFilter" AdaptivePriority="1" Caption="Lọc" />
     </Actions>
     <ActionToContainerMapping>
       <ActionContainer Id="@Document_Action" IsNewNode="True">
@@ -150,7 +152,7 @@
       </OwnMembers>
     </Class>
   </BOModel>
-  <NavigationItems DefaultLeafImageName="Action_Debug_Start" ShowImages="True">
+  <NavigationItems DefaultLeafImageName="Action_Debug_Start" ShowImages="True" StartupNavigationItem="@MainDashboard">
     <Items>
       <Item Id="Default" Caption="Trang chủ" Index="0" ImageName="BO_Address">
         <Items>
@@ -162,6 +164,7 @@
           <Item Id="HRCategory_ListView" Caption="Sơ đồ tổ chức" Index="2" />
           <Item Id="DocumentSignees_ListView" Index="3" Removed="True" />
           <Item Id="DocumentSigneesOrganization_ListView" Index="5" Removed="True" />
+          <DashboardNavigationItem Id="@MainDashboard" DashboardTitle="MainDashboard" Caption="Bảng tin" IsNewNode="True" />
           <Item Id="Configuration_ListView" Removed="True" />
           <Item Id="Department_ListView" Removed="True" />
           <Item Id="DocType_ListView" Removed="True" />
@@ -228,10 +231,10 @@
     </Items>
   </NavigationItems>
   <SchemaModules>
-    <SchemaModule Name="SchedulerAspNetModule" Version="16.2.3.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="16.2.3.0" IsNewNode="True" />
-    <SchemaModule Name="SystemAspNetModule" Version="16.2.3.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="16.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerAspNetModule" Version="16.2.6.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="16.2.6.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="16.2.6.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="16.2.6.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DashboardView Id="AccessDeniedMessage" Caption="Lỗi quyền sử dụng" IsNewNode="True">
@@ -753,6 +756,11 @@
         <ColumnInfo Id="DocDate" Width="15" SortIndex="-1" SortOrder="None" Index="5" />
         <ColumnInfo Id="DepartmentMain" Index="6" Width="20" SortIndex="-1" SortOrder="None" />
       </Columns>
+      <Filters CurrentFilterId="@db553557-4a8b-4198-860c-2adb50f29304">
+        <Filter Id="@db553557-4a8b-4198-860c-2adb50f29304" Caption="Tất cả" Index="0" IsNewNode="True" />
+        <Filter Id="@03179f9d-cd34-45b2-ba50-b58e0d77f056" Caption="Chưa đọc" Index="1" Criteria="[getListEmployeeReceiveds][[LinkEmployee.Oid] = CurrentUserId() And [DateRead] &gt; #2000-01-01#].Count() = 0" IsNewNode="True" />
+        <Filter Id="@790f1a19-19c5-49e6-838b-83e380f646a7" Caption="Đang theo dõi" Criteria="[getListEmployeeReceiveds][[LinkEmployee.Oid] = CurrentUserId() And [IsFollow] = True].Count() = 0" IsNewNode="True" />
+      </Filters>
       <Sorting>
         <SortProperty Id="@6eDateCreated" PropertyName="DateCreated" Index="1" Direction="Descending" IsNewNode="True" />
         <SortProperty Id="@c7Docdate" PropertyName="DocDate" Direction="Descending" Index="2" IsNewNode="True" />
@@ -803,6 +811,11 @@
         <ColumnInfo Id="DocDate" PropertyName="DocDate" Width="15" Index="5" SortIndex="-1" SortOrder="None" IsNewNode="True" />
         <ColumnInfo Id="DepartmentMain" PropertyName="DepartmentMain" Index="6" Width="20" IsNewNode="True" />
       </Columns>
+      <Filters CurrentFilterId="@All" IsNewNode="True">
+        <Filter Id="@All" Caption="Tất cả" Index="0" IsNewNode="True" />
+        <Filter Id="@Unread" Caption="Chưa đọc" Criteria="[getListEmployeeReceiveds][[LinkEmployee.Oid] = CurrentUserId() And [DateRead] &gt; #2000-01-01#].Count() = 0" Index="1" IsNewNode="True" />
+        <Filter Id="@Follow" Criteria="[get List Employee Receiveds][[Link Employee.Oid] = CurrentUserId() And [Theo dõi văn bản] = True].Count() = 0" Caption="Đang theo dõi" IsNewNode="True" />
+      </Filters>
     </ListView>
     <ListView Id="Document_ListView_DocOut" ClassName="Vinabits_OM_2017.Module.BusinessObjects.Document" Caption="Văn bản đi" Criteria="[InOutDocument] = ##Enum#Vinabits_OM_2017.Module.BusinessObjects.RadioButtonEnum,Value1# And [ParentDocument] Is Null" DataAccessMode="Client" IsNewNode="True">
       <Columns IsNewNode="True">
@@ -815,6 +828,11 @@
         <ColumnInfo Id="DocDate" PropertyName="DocDate" Width="15" Index="5" SortIndex="-1" SortOrder="None" IsNewNode="True" />
         <ColumnInfo Id="DepartmentMain" PropertyName="DepartmentMain" Index="6" Width="20" SortIndex="-1" SortOrder="None" IsNewNode="True" />
       </Columns>
+      <Filters CurrentFilterId="@99609ac7-43bb-4a05-80cf-ed36469973bd" IsNewNode="True">
+        <Filter Id="@99609ac7-43bb-4a05-80cf-ed36469973bd" Caption="Tất cả" Index="0" IsNewNode="True" />
+        <Filter Id="@51c4550e-01c2-467d-979f-7a04838356b3" Caption="Chưa đọc" Index="1" Criteria="[getListEmployeeReceiveds][[LinkEmployee.Oid] = CurrentUserId() And [DateRead] &gt; #2000-01-01#].Count() = 0" IsNewNode="True" />
+        <Filter Id="@bd1162a7-7d96-4adf-99b2-7439abf18db6" Caption="Đang theo dõi" Index="2" Criteria="[get List Employee Receiveds][[Link Employee.Oid] = CurrentUserId() And [Theo dõi văn bản] = True].Count() = 0" IsNewNode="True" />
+      </Filters>
     </ListView>
     <ListView Id="Document_ListView_Received" ClassName="Vinabits_OM_2017.Module.BusinessObjects.Document" Caption="Văn bản nhận" Criteria="[EmployeeReceiveds][[Oid] = CurrentEmployeeOid()]" IsNewNode="True">
       <Columns IsNewNode="True">
