@@ -29,8 +29,26 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.DocumentReport = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            // 
+            // DocumentReport
+            // 
+            this.DocumentReport.Caption = "Tạo báo cáo";
+            this.DocumentReport.Category = "Edit";
+            this.DocumentReport.ConfirmationMessage = null;
+            this.DocumentReport.Id = "DocumentReport";
+            this.DocumentReport.TargetObjectType = typeof(Vinabits_OM_2017.Module.BusinessObjects.Document);
+            this.DocumentReport.ToolTip = null;
+            this.DocumentReport.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.DocumentReport_Execute);
+            // 
+            // DocumentViewController
+            // 
+            this.Actions.Add(this.DocumentReport);
+
         }
 
         #endregion
+
+        private DevExpress.ExpressApp.Actions.SimpleAction DocumentReport;
     }
 }

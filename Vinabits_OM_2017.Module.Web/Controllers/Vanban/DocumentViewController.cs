@@ -14,6 +14,8 @@ using DevExpress.ExpressApp.Utils;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using Vinabits_OM_2017.Module.BusinessObjects;
+using DevExpress.ExpressApp.ReportsV2;
+using DevExpress.Persistent.BaseImpl;
 
 namespace Vinabits_OM_2017.Module.Web.Controllers.Vanban
 {
@@ -69,6 +71,21 @@ namespace Vinabits_OM_2017.Module.Web.Controllers.Vanban
             }
             // Unsubscribe from previously subscribed events and release other references and resources.
             base.OnDeactivated();
+        }
+
+        private void DocumentReport_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            try
+            {
+                IObjectSpace objectSpace = ReportDataProvider.ReportObjectSpaceProvider.CreateObjectSpace(typeof(ReportDataV2));
+                IReportDataV2 reportData = objectSpace.FindObject<ReportDataV2>(CriteriaOperator.Parse("[DisplayName] = 'VanBanReport'"));
+                string handle = ReportDataProvider.ReportsStorage.GetReportContainerHandle(reportData);
+                Frame.GetController<MyWebReportServiceController>().ShowPreview(handle, null, null, false, null, false, e.ShowViewParameters);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }
