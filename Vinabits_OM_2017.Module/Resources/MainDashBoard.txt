@@ -1,0 +1,218 @@
+﻿<Dashboard>
+  <Title Text="Bảng tin" />
+  <DataSources>
+    <ObjectDataSource ComponentName="objectDataSource1">
+      <Name>Document</Name>
+      <DataSource Type="Vinabits_OM_2017.Module.BusinessObjects.Document, Vinabits_OM_2017.Module, Version=1.0.6381.2749, Culture=neutral, PublicKeyToken=null" />
+    </ObjectDataSource>
+    <ObjectDataSource ComponentName="objectDataSource2">
+      <Name>DocumentEmployees</Name>
+      <DataSource Type="Vinabits_OM_2017.Module.BusinessObjects.DocumentEmployees, Vinabits_OM_2017.Module, Version=1.0.6381.2749, Culture=neutral, PublicKeyToken=null" />
+    </ObjectDataSource>
+    <SqlDataSource ComponentName="DataSource1">
+      <Name>DocumentCount_1</Name>
+      <Connection Name="ConnectionString" FromAppConfig="true" />
+      <Query Type="StoredProcQuery" Name="DocumentCount_1">
+        <Parameter Name="@userOid" Type="DevExpress.DataAccess.Expression">(null)(CurrentUserId())</Parameter>
+        <ProcName>DocumentCount</ProcName>
+      </Query>
+      <ConnectionOptions CloseConnection="true" CommandTimeout="0" />
+    </SqlDataSource>
+    <SqlDataSource ComponentName="DataSource2">
+      <Name>UserDocument_1</Name>
+      <Connection Name="ConnectionString" FromAppConfig="true" />
+      <Query Type="StoredProcQuery" Name="UserDocument_1">
+        <Parameter Name="@UserOid" Type="DevExpress.DataAccess.Expression">(null)(CurrentUserId())</Parameter>
+        <ProcName>UserDocument</ProcName>
+      </Query>
+      <ConnectionOptions CloseConnection="true" CommandTimeout="0" />
+    </SqlDataSource>
+    <ObjectDataSource ComponentName="objectDataSource3">
+      <Name>TaskExtra</Name>
+      <DataSource Type="Vinabits_OM_2017.Module.BusinessObjects.TaskExtra, Vinabits_OM_2017.Module, Version=1.0.6381.2749, Culture=neutral, PublicKeyToken=null" />
+    </ObjectDataSource>
+    <SqlDataSource ComponentName="sqlDataSource1">
+      <Name>MyTasks_1</Name>
+      <Connection Name="ConnectionString" FromAppConfig="true" />
+      <Query Type="StoredProcQuery" Name="MyTasks_1">
+        <Parameter Name="@userId" Type="DevExpress.DataAccess.Expression">(null)(CurrentUserId())</Parameter>
+        <ProcName>MyTasks</ProcName>
+      </Query>
+      <ConnectionOptions CloseConnection="true" CommandTimeout="0" />
+    </SqlDataSource>
+    <SqlDataSource ComponentName="sqlDataSource2">
+      <Name>MyNewNote_1</Name>
+      <Connection Name="ConnectionString" FromAppConfig="true" />
+      <Query Type="StoredProcQuery" Name="MyNewNote_1">
+        <Parameter Name="@UserId" Type="DevExpress.DataAccess.Expression">(null)(CurrentUserId())</Parameter>
+        <ProcName>MyNewNote</ProcName>
+      </Query>
+      <ConnectionOptions CloseConnection="true" CommandTimeout="0" />
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Chart ComponentName="chartDashboardItem1" Name="Tổng hợp" Group="groupDashboardItem1" DataSource="objectDataSource1">
+      <DataItems>
+        <Dimension DataMember="DateCreated" DateTimeGroupInterval="WeekOfYear" DefaultId="DataItem1" />
+        <Measure DataMember="Oid" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="Doctype.Title" DefaultId="DataItem2" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem2" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY Title="Văn bản" />
+          <Series>
+            <Simple Name="Văn bản" SeriesType="StackedBar">
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <AxisX TitleVisible="true" Title="Tuần trong năm" />
+    </Chart>
+    <Card ComponentName="cardDashboardItem1" Name="Card 1" ShowCaption="false" Group="groupDashboardItem1" DataSource="DataSource1" DataMember="DocumentCount_1" ContentArrangementMode="FixedRowCount" ContentLineCount="1">
+      <DataItems>
+        <Measure DataMember="UnReadCount" DefaultId="DataItem0" />
+        <Measure DataMember="FollowCount" DefaultId="DataItem1" />
+      </DataItems>
+      <Card Name="Chưa đọc">
+        <ActualValue DefaultId="DataItem0" />
+      </Card>
+      <Card Name="Đang theo dõi">
+        <ActualValue DefaultId="DataItem1" />
+      </Card>
+    </Card>
+    <Grid ComponentName="gridDashboardItem1" Name="Văn bản mới" Group="groupDashboardItem1" DataSource="DataSource2" DataMember="UserDocument_1">
+      <DataItems>
+        <Dimension DataMember="Title" DefaultId="DataItem0" />
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions ShowColumnHeaders="false" />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem2" Name="Cập nhật mới" Group="groupDashboardItem2" DataSource="sqlDataSource2" DataMember="MyNewNote_1">
+      <DataItems>
+        <Dimension DataMember="Messenge" SortByMeasure="DataItem3" DefaultId="DataItem0" />
+        <Dimension DataMember="Employee" DefaultId="DataItem1" />
+        <Dimension DataMember="Task" DefaultId="DataItem2" />
+        <Measure DataMember="IsRead" DefaultId="DataItem3" />
+      </DataItems>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem3" />
+      </HiddenMeasures>
+      <FormatRules>
+        <GridItemFormatRule Name="FormatRule 2" DataItem="DataItem3" DataItemApplyTo="DataItem0">
+          <FormatConditionValue>
+            <IconSettings IconType="IndicatorGreenCheck" />
+            <Value1 Type="System.Decimal" Value="1" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="FormatRule 1" ApplyToRow="true" DataItem="DataItem3" DataItemApplyTo="DataItem0">
+          <FormatConditionValue Condition="NotEqual">
+            <AppearanceSettings AppearanceType="FontBold" />
+            <Value1 Type="System.Decimal" Value="1" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Tin nhắn">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Người gửi">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Công việc">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions WordWrap="true" />
+    </Grid>
+    <Card ComponentName="cardDashboardItem2" Name="Card 2" ShowCaption="false" Group="groupDashboardItem2" DataSource="DataSource1" DataMember="DocumentCount_1" ContentArrangementMode="FixedColumnCount">
+      <DataItems>
+        <Measure DataMember="TaskDueCount" DefaultId="DataItem0" />
+        <Measure DataMember="TaskFinishCount" DefaultId="DataItem1" />
+        <Measure DataMember="TaskUndoneCount" DefaultId="DataItem2" />
+      </DataItems>
+      <Card Name="Quá hạn">
+        <ActualValue DefaultId="DataItem0" />
+      </Card>
+      <Card Name="Hoàn thành">
+        <ActualValue DefaultId="DataItem1" />
+      </Card>
+      <Card Name="Mới">
+        <ActualValue DefaultId="DataItem2" />
+      </Card>
+    </Card>
+    <Chart ComponentName="chartDashboardItem2" Name="Thông kê công việc" Group="groupDashboardItem2" DataSource="sqlDataSource1" DataMember="MyTasks_1" Rotated="true">
+      <DataItems>
+        <Dimension DataMember="DateCreated" DateTimeGroupInterval="Month" DefaultId="DataItem1" />
+        <Measure DataMember="Oid" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="Status" DefaultId="DataItem2" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem2" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY Title="Công việc" />
+          <Series>
+            <Simple SeriesType="StackedBar">
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <AxisX Reverse="true" />
+    </Chart>
+  </Items>
+  <Groups>
+    <Group ComponentName="groupDashboardItem1" Name="Văn bản" />
+    <Group ComponentName="groupDashboardItem2" Name="Công việc" />
+  </Groups>
+  <ColorScheme>
+    <Entry DataSource="sqlDataSource1" DataMember="MyTasks_1" Color="-10039064" />
+  </ColorScheme>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical">
+        <LayoutGroup Weight="148.82280049566296">
+          <LayoutGroup Orientation="Vertical">
+            <LayoutGroup>
+              <LayoutGroup Orientation="Vertical">
+                <LayoutGroup DashboardItem="groupDashboardItem1">
+                  <LayoutGroup Orientation="Vertical">
+                    <LayoutGroup Weight="85.85279094029184">
+                      <LayoutGroup Orientation="Vertical" Weight="35.002550566463022">
+                        <LayoutItem DashboardItem="cardDashboardItem1" Weight="58.2644466768158" />
+                        <LayoutItem DashboardItem="gridDashboardItem1" Weight="65.337190430960462" />
+                      </LayoutGroup>
+                    </LayoutGroup>
+                    <LayoutItem DashboardItem="chartDashboardItem1" Weight="114.14720905970816" />
+                  </LayoutGroup>
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </LayoutGroup>
+      <LayoutGroup DashboardItem="groupDashboardItem2">
+        <LayoutGroup Orientation="Vertical">
+          <LayoutItem DashboardItem="cardDashboardItem2" Weight="76.0319334681985" />
+          <LayoutItem DashboardItem="gridDashboardItem2" Weight="105.34357859200054" />
+          <LayoutItem DashboardItem="chartDashboardItem2" Weight="176.90082172913068" />
+        </LayoutGroup>
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

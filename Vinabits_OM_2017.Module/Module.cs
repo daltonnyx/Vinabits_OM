@@ -55,6 +55,7 @@ namespace Vinabits_OM_2017.Module {
             PredefinedReportsUpdater predefinedReportsUpdater =
                new PredefinedReportsUpdater(Application, objectSpace, versionFromDB);
             predefinedReportsUpdater.AddPredefinedReport<SchedulerReport>("SchedulerReport", typeof(EventExtra));
+            predefinedReportsUpdater.AddPredefinedReport<Reports.VanBanReport>("VanBanReport", typeof(BusinessObjects.VanBanReport));
             return new ModuleUpdater[] { updater, predefinedReportsUpdater };
         }
         public override void Setup(XafApplication application) {
