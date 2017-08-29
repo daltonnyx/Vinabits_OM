@@ -17,6 +17,8 @@ using DevExpress.ExpressApp.Utils;
 using System.Security.Cryptography;
 using System.Text;
 using DevExpress.ExpressApp.DC;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Vinabits_OM_2017.Module.BusinessObjects
 {
@@ -370,7 +372,7 @@ namespace Vinabits_OM_2017.Module.BusinessObjects
             set { SetPropertyValue("DateOut", ref dateout, value); }
         }
         #region Document-Employees - Tham chieu  voi document
-        [Association, Browsable(false)]
+        [Association, VisibleInDetailView(false), VisibleInListView(false)]
         public IList<DocumentEmployees> DocumentEmployees
         {
             get
@@ -620,18 +622,33 @@ namespace Vinabits_OM_2017.Module.BusinessObjects
             if (this.Employees == null || this.Employees.Count <= 0)
                 return null;
             try { 
-                IEnumerator<EmployeeOidHolder> leaders = this.Session.GetObjectsFromQuery<EmployeeOidHolder>(
-    @"SELECT TOP 1 emp.[Oid]
-      FROM [dbo].[Employee] emp
-      INNER JOIN [dbo].[Position] p ON emp.Position = p.Oid
-      WHERE [Department] = @p0
-      order by p.PositionLevel desc;", new object[] { this.Oid.ToString() }).GetEnumerator();
-                if (leaders.MoveNext())
-                {
-                    leader = this.Session.GetObjectByKey<Employee>(leaders.Current.Oid);
-                }
+                using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString)) {
+                    connection.Open();
+                    using(SqlCommand cmd = new SqlCommand(@"SELECT TOP 1 emp.[Oid]
+                        FROM [dbo].[Employee] emp
+                        INNER JOIN [dbo].[Position] p ON emp.Position = p.Oid
+                        WHERE [Department] = @p0
+                        order by p.PositionLevel desc;", connection)) {
+                        cmd.Parameters.Add(new SqlParameter("p0", this.Oid.ToString()));
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                leader = this.Session.GetObjectByKey<Employee>(reader.GetGuid(0));
+                                    
+                            }
+                        }
+                        //IEnumerator<EmployeeOidHolder> leaders = this.Session.GetObjectsFromQuery<EmployeeOidHolder>(
+                        //, new object[] { this.Oid.ToString() }).GetEnumerator();
+                        //if (leaders.MoveNext())
+                        //{
+                                
+                        //}
+                    }
+                    connection.Close();
+                } 
             }
-            catch
+            catch(Exception ex)
             {
                 return null;
             }
