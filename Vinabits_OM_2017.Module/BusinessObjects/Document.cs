@@ -312,7 +312,7 @@ namespace Vinabits_OM_2017.Module.BusinessObjects
         }
 
         private bool isApproved;
-        [XafDisplayName("Đã duyệt/bút phê?"), ImmediatePostData()] //, ImmediatePostData()
+        [XafDisplayName("Đã duyệt/bút phê?")] //, ImmediatePostData()
         //[Appearance("DocIsApproved", TargetItems = "*", Context = "Any", Criteria = "'@This.EmployeeReceiveds.Count' < 1", Enabled = false)]
         public bool IsApproveed
         {
@@ -437,6 +437,7 @@ namespace Vinabits_OM_2017.Module.BusinessObjects
             //}
 
             //3. Thêm người nhận mặc định nếu Đơn vị họ có trong danh sách nhận
+            // This one is so fucking long
             ICollection docDefaultReceiveds = Session.GetObjects(Session.GetClassInfo<DocumentDefaultReceived>(), null, null, 1000, false, false);
             foreach(DocumentDefaultReceived docDefaultReceived in docDefaultReceiveds)
             {
@@ -485,15 +486,12 @@ namespace Vinabits_OM_2017.Module.BusinessObjects
             {
                 idx++;
                 if((maxEmp == null) || 
-                    (maxEmp.Position != null && docEmp.LinkEmployee != null && docEmp.LinkEmployee.Position.PositionLevel > maxEmp.Position.PositionLevel))
+                    (maxEmp.Position != null && docEmp.LinkEmployee != null && docEmp.LinkEmployee.Position != null && docEmp.LinkEmployee.Position.PositionLevel > maxEmp.Position.PositionLevel))
                 {
-                    if (docEmp.LinkEmployee != null && docEmp.LinkEmployee.Position != null)
-                    {
                         maxEmp = docEmp.LinkEmployee;
                         selectedIdx = idx;
                         if (docEmp.IsDirected && docEmp.IsCurrentDirected)
                             isDiretedAlready = true;
-                    }
                 }
             }
 
@@ -516,12 +514,10 @@ namespace Vinabits_OM_2017.Module.BusinessObjects
             base.OnSaved();
             //5. Cập nhật ý kiến chỉ đạo, nếu có nhập đồng thời
             // Let Object saved first
-            if (this.isApproved)
+            if (this.isApproved && this.EmpApproved != null)
             {
-                if (this.EmpApproved == null)
-                    throw new UserFriendlyException("Chưa chọn người duyệt");
                 DocumentEmployees docEmp = null;
-                int idxEmp = this.DocumentEmployees.FindIndex(x => x.LinkEmployee == this.EmpApproved && x.LinkDocument == this);
+                int idxEmp = this.DocumentEmployees.FindIndex(x => x.LinkEmployee.Oid == this.EmpApproved.Oid && x.LinkDocument == this);
                 if (idxEmp > -1 && this.DocumentEmployees[idxEmp] != null)
                 {
                     docEmp = Session.GetObjectByKey<DocumentEmployees>(this.DocumentEmployees[idxEmp].Oid);
