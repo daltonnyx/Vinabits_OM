@@ -13,6 +13,7 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using Vinabits_OM_2017.Module.BusinessObjects;
 using System.Collections.Generic;
+using DevExpress.ExpressApp.Dashboards;
 
 namespace Vinabits_OM_2017.Module.DatabaseUpdate {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppUpdatingModuleUpdatertopic.aspx
@@ -22,7 +23,8 @@ namespace Vinabits_OM_2017.Module.DatabaseUpdate {
         }
         public override void UpdateDatabaseAfterUpdateSchema() {
             base.UpdateDatabaseAfterUpdateSchema();
-
+            DashboardsModule.AddDashboardData<DashboardData>(
+                ObjectSpace, "MainDashboard", Properties.Resources.MainDashBoard);
             //Cập nhật Danh sách Department cấp trên: chỉ mở và cho chạy 1 lần
             /*
             List<Department> allDepartment = ObjectSpace.GetObjects<Department>().ToList();
